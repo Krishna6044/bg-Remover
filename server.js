@@ -9,9 +9,17 @@ dotenv.config()
 
 const app = express()
 const port = process.env.PORT || 4000
-const frontendurl=process.env.Backend_Url
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  ...(process.env.FRONTEND_URLS || process.env.frontendurl || '')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean),
+]
 
-app.use(cors({ origin: ['http://localhost:5173', 'http://127.0.0.1:5173', frontendurl] }))
+app.use(cors({ origin: allowedOrigins }))
+app.options('*', cors({ origin: allowedOrigins }))
 app.use(express.json({ limit: '10mb' }))
 
 const requiredEnv = [
