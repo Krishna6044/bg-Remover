@@ -9,8 +9,9 @@ dotenv.config()
 
 const app = express()
 const port = process.env.PORT || 4000
+const frontendurl=process.env.Backend_Url
 
-app.use(cors({ origin: ['http://localhost:5173', 'http://127.0.0.1:5173','https://bg-frontend-1.onrender.com'] }))
+app.use(cors({ origin: ['http://localhost:5173', 'http://127.0.0.1:5173', frontendurl] }))
 app.use(express.json({ limit: '10mb' }))
 
 const requiredEnv = [
